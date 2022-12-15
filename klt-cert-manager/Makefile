@@ -1,6 +1,6 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+IMG ?= klc-certmanager:latest
 # RELEASE_REGISTRY is the container registry to push into.
 RELEASE_REGISTRY?=ghcr.io/keptn
 RELEASE_TIME=$(shell date +%Y%m%d%s)
@@ -10,9 +10,13 @@ TAG?=latest
 RELEASE_IMAGE:=keptn-cert-operator:$(TAG)
 
 ARCHS = amd64 arm64
+COMMONENVVAR=GOOS=$(shell uname -s | tr A-Z a-z)
+BUILDENVVAR=CGO_ENABLED=0
+
+VERSION=$(shell echo $(RELEASE_VERSION) | awk -F - '{print $$2}')
 
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
-ENVTEST_K8S_VERSION = 1.25.0
+ENVTEST_K8S_VERSION = 1.24.2
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
@@ -55,7 +59,7 @@ help: ## Display this help.
 
 .PHONY: manifests
 manifests: controller-gen ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
-	$(CONTROLLER_GEN) rbac:roleName=klc-cert-manager-role crd webhook paths="./..." output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) rbac:roleName=cert-manager-role crd webhook paths="./..." output:crd:artifacts:config=config/crd/bases
 
 .PHONY: generate
 generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
@@ -141,9 +145,9 @@ ENVTEST ?= $(LOCALBIN)/setup-envtest
 ## Tool Versions
 
 # renovate: datasource=github-tags depName=kubernetes-sigs/kustomize
-KUSTOMIZE_VERSION ?= v3.8.7
+KUSTOMIZE_VERSION?=v4.5.7
 # renovate: datasource=github-tags depName=kubernetes-sigs/controller-tools
-CONTROLLER_TOOLS_VERSION ?= v0.9.2
+CONTROLLER_TOOLS_VERSION?=v0.10.0
 
 KUSTOMIZE_INSTALL_SCRIPT ?= "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"
 .PHONY: kustomize

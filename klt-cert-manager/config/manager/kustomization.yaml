@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: docker.io/annadreal/keptn-cert-operator
-  newTag: "202212151671103985"
+  newTag: "202212191671455674"

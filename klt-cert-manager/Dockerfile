@@ -19,11 +19,12 @@ RUN go mod download
 
 
 # Copy the go source
-COPY main.go ./
-COPY ../klc-cert-manager/controllers controllers/
-COPY eventfilter eventfilter/
+COPY main.go main.go
+COPY hack/ hack/
+COPY controllers/ controllers/
+COPY eventfilter/ eventfilter/
 COPY fake/ fake/
-
+COPY kubeutils/ kubeutils/
 
 # Build
 RUN controller-gen object:headerFile="hack/boilerplate.go.txt" paths="./..." && \
@@ -33,7 +34,7 @@ RUN controller-gen object:headerFile="hack/boilerplate.go.txt" paths="./..." && 
     -X main.gitCommit=${GIT_HASH} \
     -X main.buildTime=${BUILD_TIME} \
     -X main.buildVersion=${RELEASE_VERSION}" \
-    -a -o manager main.go
+    -o bin/manager main.go
 
 FROM gcr.io/distroless/base-debian11:debug-nonroot as debug
 
@@ -44,7 +45,7 @@ LABEL org.opencontainers.image.source="https://github.com/keptn/lifecycle-toolki
     org.opencontainers.image.licenses="Apache-2.0"
 
 WORKDIR /
-COPY --from=builder /workspace/manager .
+COPY --from=builder /workspace/bin/manager .
 
 ENTRYPOINT ["/manager"]
 
@@ -57,7 +58,7 @@ LABEL org.opencontainers.image.source="https://github.com/keptn/lifecycle-toolki
     org.opencontainers.image.licenses="Apache-2.0"
 
 WORKDIR /
-COPY --from=builder /workspace/manager .
+COPY --from=builder /workspace/bin/manager .
 USER 65532:65532
 
 ENTRYPOINT ["/manager"]

@@ -4,10 +4,17 @@ kind: ClusterRole
 metadata:
   creationTimestamp: null
   name: cert-manager-role
-  namespace: keptn-lifecycle-toolkit-system
 rules:
 - apiGroups:
   - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resourceNames:
+  - klc-controller-manager-certs
   resources:
   - secrets
   verbs:
@@ -27,6 +34,16 @@ rules:
   verbs:
   - create
   - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
   - get
   - list
   - patch
