@@ -19,9 +19,11 @@ RUN go mod download
 # Copy the go source
 COPY main.go main.go
 COPY hack/ hack/
+COPY cmd/ cmd/
 COPY api/ api/
 COPY controllers/ controllers/
 COPY webhooks/ webhooks/
+
 
 # Build
 RUN controller-gen object:headerFile="hack/boilerplate.go.txt" paths="./..." && \
@@ -56,6 +58,6 @@ LABEL org.opencontainers.image.source="https://github.com/keptn/lifecycle-toolki
 
 WORKDIR /
 COPY --from=builder /workspace/bin/manager .
-USER 65532:65532
+USER 1001:1001
 
 ENTRYPOINT ["/manager"]

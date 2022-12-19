@@ -35,7 +35,7 @@ func TestKeptnAppReconciler_createAppVersionSuccess(t *testing.T) {
 		},
 		Status: lfcv1alpha2.KeptnAppStatus{},
 	}
-	r, _, _ := setupReconciler(t)
+	r, _, _ := setupReconciler()
 
 	appVersion, err := r.createAppVersion(context.TODO(), app)
 	if err != nil {
@@ -49,7 +49,7 @@ func TestKeptnAppReconciler_createAppVersionSuccess(t *testing.T) {
 
 func TestKeptnAppReconciler_reconcile(t *testing.T) {
 
-	r, eventChannel, tracer := setupReconciler(t)
+	r, eventChannel, tracer := setupReconciler()
 
 	tests := []struct {
 		name    string
@@ -127,7 +127,7 @@ func TestKeptnAppReconciler_reconcile(t *testing.T) {
 	assert.Equal(t, tracer.StartCalls()[3].SpanName, "reconcile_app")
 }
 
-func setupReconciler(t *testing.T) (*KeptnAppReconciler, chan string, *interfacesfake.ITracerMock) {
+func setupReconciler() (*KeptnAppReconciler, chan string, *interfacesfake.ITracerMock) {
 	//setup logger
 	opts := zap.Options{
 		Development: true,
@@ -139,10 +139,8 @@ func setupReconciler(t *testing.T) (*KeptnAppReconciler, chan string, *interface
 		return ctx, trace.SpanFromContext(ctx)
 	}}
 
-	fakeClient, err := fake.NewClient()
-	if err != nil {
-		t.Errorf("Reconcile() error when setting up fake client %v", err)
-	}
+	fakeClient := fake.NewClient()
+
 	recorder := record.NewFakeRecorder(100)
 	r := &KeptnAppReconciler{
 		Client:   fakeClient,

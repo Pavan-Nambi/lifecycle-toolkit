@@ -1,4 +1,4 @@
-package webhooks
+package pod_mutator
 
 import (
 	"context"
@@ -10,9 +10,9 @@ import (
 	"strings"
 
 	"github.com/go-logr/logr"
+	"github.com/keptn/lifecycle-toolkit/operator/api/v1alpha1/semconv"
 	klcv1alpha2 "github.com/keptn/lifecycle-toolkit/operator/api/v1alpha2"
 	apicommon "github.com/keptn/lifecycle-toolkit/operator/api/v1alpha2/common"
-	"github.com/keptn/lifecycle-toolkit/operator/api/v1alpha2/semconv"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/propagation"
@@ -28,9 +28,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
-// +kubebuilder:webhook:path=/mutate-v1-pod,mutating=true,failurePolicy=fail,groups="",resources=pods,verbs=create;update,versions=v1,name=mpod.keptn.sh,admissionReviewVersions=v1,sideEffects=None
+//+kubebuilder:webhook:path=/mutate-v1-pod,mutating=true,failurePolicy=fail,groups="",resources=pods,verbs=create;update,versions=v1,name=mpod.keptn.sh,admissionReviewVersions=v1,sideEffects=None
 //+kubebuilder:rbac:groups=core,resources=namespaces,verbs=get;list;watch
 //+kubebuilder:rbac:groups=apps,resources=deployments;statefulsets;daemonsets;replicasets,verbs=get
+// +kubebuilder:rbac:groups="",resourceNames=klc-controller-manager-certs,resources=secrets,verbs=get;list;watch;
 
 // PodMutatingWebhook annotates Pods
 type PodMutatingWebhook struct {
