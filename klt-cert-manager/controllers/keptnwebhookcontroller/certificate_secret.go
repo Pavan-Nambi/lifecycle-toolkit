@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/go-logr/logr"
-	"github.com/keptn/lifecycle-toolkit/klc-cert-manager/kubeutils"
+	"github.com/keptn/lifecycle-toolkit/klt-cert-manager/kubeutils"
 	apiv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 
 	"github.com/pkg/errors"

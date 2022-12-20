@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/go-logr/logr/testr"
-	"github.com/keptn/lifecycle-toolkit/klc-cert-manager/fake"
+	"github.com/keptn/lifecycle-toolkit/klt-cert-manager/fake"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	admissionregistrationv1 "k8s.io/api/admissionregistration/v1"
