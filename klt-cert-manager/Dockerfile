@@ -20,8 +20,8 @@ RUN go mod download
 
 # Copy the go source
 COPY main.go ./
-COPY controllers/ controllers/
-COPY eventfilter/ eventfilter/
+COPY ../klc-cert-manager/controllers controllers/
+COPY eventfilter eventfilter/
 COPY fake/ fake/
 
 
