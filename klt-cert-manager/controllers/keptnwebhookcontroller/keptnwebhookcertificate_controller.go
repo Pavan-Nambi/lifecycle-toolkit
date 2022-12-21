@@ -83,9 +83,7 @@ func (r *KeptnWebhookCertificateReconciler) Reconcile(ctx context.Context, reque
 	areMutatingWebhookConfigsValid := certSecret.areWebhookConfigsValid(mutatingWebhookConfigs)
 	areCRDConversionsConfigValid := certSecret.areCRDConversionsValid(crds)
 
-	if certSecret.isRecent() &&
-		areMutatingWebhookConfigsValid &&
-		areCRDConversionsConfigValid {
+	if certSecret.isRecent() && areMutatingWebhookConfigsValid && areCRDConversionsConfigValid {
 		r.Log.Info("secret for certificates up to date, skipping update")
 		r.cancelMgr()
 		return reconcile.Result{RequeueAfter: SuccessDuration}, nil
