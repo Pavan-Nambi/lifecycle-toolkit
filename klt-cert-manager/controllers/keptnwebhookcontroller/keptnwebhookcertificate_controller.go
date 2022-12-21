@@ -100,8 +100,7 @@ func (r *KeptnWebhookCertificateReconciler) Reconcile(ctx context.Context, reque
 		return reconcile.Result{}, errors.WithStack(err)
 	}
 
-	err = r.updateClientConfigurations(bundle, mutatingWebhookConfigs, mutatingWebhookConfiguration)
-	if err != nil {
+	if err := r.updateClientConfigurations(bundle, mutatingWebhookConfigs, mutatingWebhookConfiguration); err != nil {
 		return reconcile.Result{}, errors.WithStack(err)
 	}
 
