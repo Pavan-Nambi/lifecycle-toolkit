@@ -48,9 +48,9 @@ func (cs *Certs) ValidateCerts() error {
 		}
 	}
 
-	now := time.Now().UTC()
-	if !cs.Now.IsZero() {
-		now = cs.Now
+	now := cs.Now
+	if now.IsZero() {
+		now = time.Now().UTC()
 	}
 
 	renewRootCerts := cs.validateRootCerts(now)
