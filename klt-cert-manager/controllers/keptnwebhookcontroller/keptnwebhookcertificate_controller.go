@@ -18,17 +18,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
-<<<<<<< HEAD
-const (
-	SuccessDuration            = 3 * time.Hour
-	Webhookconfig              = "klc-mutating-webhook-configuration"
-	secretPostfix              = "-certs"
-	certificatesSecretEmptyErr = "certificates secret is empty"
-	namespace                  = "keptn-lifecycle-toolkit-system"
-)
-
-=======
->>>>>>> 916dae1 (feat: added logic for cert handling)
 // KeptnWebhookCertificateReconciler reconciles a KeptnWebhookCertificate object
 type KeptnWebhookCertificateReconciler struct {
 	ctx           context.Context
