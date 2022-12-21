@@ -31,8 +31,8 @@ require (
 	github.com/magiconair/properties v1.8.7
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/afero v1.6.0
-	k8s.io/apiextensions-apiserver v0.25.0
-	k8s.io/apiserver v0.25.4
+	k8s.io/apiextensions-apiserver v0.25.5
+	k8s.io/apiserver v0.25.5
 )
 
 require (
