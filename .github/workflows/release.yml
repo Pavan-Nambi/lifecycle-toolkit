@@ -16,6 +16,7 @@ env:
   # renovate: datasource=github-releases depName=kubernetes-sigs/controller-tools
   CONTROLLER_TOOLS_VERSION: "v0.9.2"
   SCHEDULER_COMPATIBLE_K8S_VERSION: "v0.24.3"
+  KEPTIN_BOT_TOKEN: ${{ secrets.KEPTN_BOT_TOKEN }}
 
 jobs:
   release-please:
@@ -71,7 +72,7 @@ jobs:
         with:
           registry: "ghcr.io"
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{env.KEPTIN_BOT_TOKEN}}
 
       - name: Set up Cosign
         uses: sigstore/cosign-installer@v2.8.1
